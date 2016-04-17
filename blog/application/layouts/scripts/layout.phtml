@@ -1,0 +1,60 @@
+<?php echo $this->doctype() ?>
+<html>
+	<head>
+	<?php echo $this->headMeta(); ?>
+	<?php echo $this->headTitle() ?>
+	<?php echo $this->headLink() ?>
+
+
+	</head>
+	<body>
+		<header>
+		    <div class="navbar navbar-inverse navbar-fixed-top">
+		      <div class="navbar-inner">
+		        <div class="container">
+		          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		          </button>
+		          <a class="brand" href="http://www.templatemo.com/page/1" target="_parent">Nephro-mih</a>
+		          <nav class="nav-collapse collapse">
+		            <ul class="nav pull-right">
+		              <li class="active"><a href="../index - Copy/index.html">Home</a></li>
+		              <li><a href="login">Login</a></li>
+		              <li><a href="user/register.php">Registeration</a></li>
+		              <li><a href="privet">Privet Corner</a></li>
+		              <li><a href="departments">Our Department</a></li>
+		              <li><a href="users">Users</a></li>
+		              <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Activities <span class="caret"></span></a>
+		                <ul class="dropdown-menu">
+		                  <li><a href="activities" target="_blank">Social Activities</a></li>
+		                  <li><a href="activities" target="_blank">Scientific Activities</a></li>
+		                </ul>
+		              </li>
+		              <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Medical Library <span class="caret"></span></a>
+		                <ul class="dropdown-menu">
+		                  <li><a href="medicallibrary/asd.php" target="_blank">ask Expert</a></li>
+		                  <li><a href="medicallibrary/descussion.php" target="_blank">Medical Descussion</a></li>
+		                  <li><a href="medicallibrary/medicalvideos.php" target="_blank">Medical Videos</a></li>
+		                  <li><a href="medicallibrary/Lectures.php" target="_blank">Nephrology Lectures</a></li>
+		                  <li><a href="medicallibrary/books.php" target="_blank">Medical Books</a></li>
+		                </ul>
+		              </li>
+		              <li><a href="contact">Contact Us</a></li>
+		              <li><a href="contact">Logout</a></li>	
+		            </ul>
+		          </nav>
+		        </div>
+		      </div>
+		    </div>
+		  </header>		
+
+
+<?php echo $this->layout()->content; ?>
+	
+	<?php echo $this->headScript() ?>
+
+	
+	</body>
+</html>	
