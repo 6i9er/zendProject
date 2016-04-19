@@ -1,0 +1,59 @@
+<section class="container" id="carousel_container">
+
+
+<div class="page-header text-center">
+                                  <h3 >All Users</h3>
+                                </div>
+                                
+                                <!-- Quiz Table -->
+                                
+                                <div class="row text-center ">
+                                  
+                      <input class="form-control  input-block-level text-center" type="text" placeholder="Search By  User Name ">
+                                </div>
+                                  <div class="row ">
+                                        <a href="<?php echo $this->baseUrl(); ?>/users/add" class="btn btn-info btn-block " > Insert New User </a>
+                                    </div>
+                                    <div class="row mytable "  id="books_cat">
+                                      
+                                        <table class="table table-bordered  table-hover table-responsive ">
+                                            <thead>
+                                                <tr class="active ">
+                                                    <th width="5%">#</th>
+                                                    <th width="50%"> Name</th>
+                                                    <th>Type</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody >
+                                                <?php
+                                                    if($this->data){
+                                                         for($i=0; $i<count($this->data); $i++){
+                                                               ?>
+                                                                <tr>
+                                                                    <td><?php echo $this -> data[$i]['id'] ?></td>
+                                                                    <td><?php echo $this -> data[$i]['name'] ?></td>
+                                                                    <td><?php if($this -> data[$i]['type'] == '1') echo 'admin'; else echo 'User'; ?></td>
+                                                                    <td class=""> 
+                                                                        <a href="<?php echo $this->baseUrl(); ?>/users/view/id/<?php echo $this ->data[$i]['id'] ?>" target="_blank" class="btn btn-info btn-sm">View</a>
+                                                                        <a href="<?php echo $this->baseUrl(); ?>/users/edit/id/<?php echo $this ->data[$i]['id'] ?>" target="_blank" class="btn btn-info btn-sm">Edit</a>
+                                                                        <a href="<?php echo $this->baseUrl(); ?>/users/delete/id/<?php echo $this ->data[$i]['id'] ?>" target="_blank" class="btn btn-info btn-sm">Delete</a>
+                                                                    </td>
+                                                                </tr>
+                                                               <?php
+                                                           } 
+                                                    }
+                                                ?>    
+
+                                                
+                                                
+                                            </tbody>
+                                        </table>
+                                        
+                                    </div>
+        
+   
+</section>
+
+
+        

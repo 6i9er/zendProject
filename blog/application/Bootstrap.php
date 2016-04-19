@@ -22,11 +22,24 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$view->headLink()->prependStylesheet($view->baseUrl().'/css/bootstrap.min.css');
 		$view->headLink()->appendStylesheet($view->baseUrl().'/css/templatemo_style_fix_menu.css');
 		$view->headLink()->appendStylesheet($view->baseUrl().'/css/bootstrap-responsive.min.css');
-		$view->headLink()->appendStylesheet($view->baseUrl().'http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css');
+		//$view->headLink()->appendStylesheet($view->baseUrl().'http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css');
 		$view->headLink()->appendStylesheet($view->baseUrl().'/css/templatemo_style.css');
 		// Set the initial JS to load:
-		$view->headScript()->prependFile('http://code.jquery.com/jquery-latest.js');
-		$view->headScript()->appendFile('js/bootstrap.min.js');
+		$view->headScript()->prependFile($view->baseUrl().'/js/jquery-1.12.0.min.js');
+		$view->headScript()->appendFile($view->baseUrl().'/js/bootstrap.min.js');
+		$view->headScript()->appendFile($view->baseUrl().'/js/ckeditor.js');
+
+		
+
+	}
+
+
+	//To activate session
+	protected function _initSession(){
+		Zend_Session::start();
+		$session = new Zend_Session_Namespace( 'Zend_Auth' );
+		$session->setExpirationSeconds( 1800 );
+		
 	}
 
 }

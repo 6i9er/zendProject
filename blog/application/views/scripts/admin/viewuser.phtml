@@ -1,0 +1,76 @@
+<?php 
+//echo( $this -> form[0]['id']);
+?>
+<section class="container" id="carousel_container">
+
+	<div class="page-header text-center">
+  		<h3  style="text-shadow:0px 0px 5px #555;">View User <?php echo $this-> form[0]['name']; ?></h3>
+  	</div>
+    <label class=" col-sm-12 control-label"><h1  > <small>All User's Information:</small></h1></label>
+     <div class="row">
+        
+            <article class="col-sm-6">
+                <h3><span class="label label-default">Name</span>  : <?php echo $this-> form[0]['name']; ?></h3>
+                <h3><span class="label label-default">Email</span>  : <?php echo $this-> form[0]['mail']; ?></h3>
+                <h3><span class="label label-default">Gender</span>  : <?php if($this-> form[0]['gender'] == "1") echo "Male" ; else echo "Female"; ?></h3>
+                <h3><span class="label label-default">Country</span>  : <?php echo $this-> form[0]['country']; ?></h3>
+                <h3><span class="label label-default">Type</span>  : <?php if($this-> form[0]['type'] == '1') echo "Admin"; else echo "User"; ?></h3>
+                <h3><span class="label label-default">signature</span>  : <?php echo $this-> form[0]['signature']; ?></h3>
+
+                <h3><span class="label label-default">is Blocked</span>  : <?php if($this-> form[0]['type'] == '1') echo "Blocked"; else echo "Not Blocked"; ?></h3>    
+
+              </article>
+              <article class="col-sm-6">
+              <img class="img-responsive img-thumbnail"  src="<?php echo $this->baseUrl() ?>/uploads/users/<?php echo $this-> form[0]['prof_pic']; ?>">
+              <h3><span class="label label-default">Last Login Date</span>  : <?php echo $this-> form[0]['last_login'] ?></h3>
+              <h3><span class="label label-default">Last Forget Date</span>  : <?php echo $this-> form[0]['last_forget'] ?></h3>
+              <h3><span class="label label-default">Registeration Date</span>  : <?php echo $this-> form[0]['reg_date'] ?></h3>
+                    
+              </article>
+     </div>
+
+     <!--
+     <label class=" col-sm-12 control-label"><h1  > <small>All User's Topics :</small></h1></label>
+     <div class="row">
+     		<table class="table table-bordered  table-hover table-responsive ">
+                            <thead>
+                                <tr class="active ">
+                                    <th width="5%">#</th>
+                                    <th width="50%"> Title</th>
+                                    <th>Category</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                              
+                              
+                              			<tr>
+                                            <td>1</td>
+                                            <td>How it will Work</td>
+                                             <td>News</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>How it will Work</td>
+                                             <td>Ask Expert</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>How it will Work</td>
+                                             <td>News</td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>How it will Work</td>
+                                             <td>Medical Descussion</td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                            <td>How it will Work</td>
+                                             <td>News</td>
+                                        </tr>
+                                
+                            	</tbody>
+                            </table>
+     </div>
+-->
+</section>

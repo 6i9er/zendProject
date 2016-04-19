@@ -1,0 +1,40 @@
+<section class="container" id="carousel_container">
+
+	<div class="page-header text-center">
+  		<h3  style="text-shadow:0px 0px 5px #555;">insert News</h3>
+  	</div>
+    <div class="row">
+    	<form action="insert.php" method="post" role="form">
+        <article class="span12">
+            <label for="author">Title:</label> <input name="author" type="text" class="input_field input-block-level input-xxlarge" placeholder="Enter Title" id="author" maxlength="40" />
+                <div class="cleaner"></div>
+                
+                
+                <label for="author">Photos For Album:</label> <input name="author" type="file" multiple class="input_field input-block-level input-xxlarge" style="border-radius:5px; border:1px solid #ccc;width:100%; display:block;" placeholder="Enter Title" id="author" maxlength="40" />
+                <div class="cleaner"></div>
+                
+                <label for="author">Other Attachment:</label> <input name="author" type="file" multiple style="border-radius:5px; border:1px solid #ccc;width:100%; display:block;" class=" input_field input-block-level input-xxlarge" placeholder="Enter Title" id="author" maxlength="40" />
+                <div class="cleaner"></div>
+                
+                <label for="author">Video Links:</label> <input name="author" type="text" class="input_field input-block-level input-xxlarge" placeholder="Enter Link" id="author" maxlength="40" />
+                <div class="cleaner"></div>
+                
+                <label for="email" class="text-center"><h3>Text</h3></label> 
+                <div class="cleaner"></div>
+          </article>
+       </div>   
+    <div class="row"> 
+      
+      <textarea cols="60" id="editor1" name="editor1" rows="10"></textarea>
+		
+       	 		<br><p>
+                 	<input type="submit" name="insert_btn" value="Insert" class="btn btn-danger pull-right">
+                 </p>
+         </form>
+    </div>
+        
+   
+</section>
+
+
+        
