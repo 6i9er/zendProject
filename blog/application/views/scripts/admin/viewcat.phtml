@@ -1,23 +1,23 @@
 <?php 
-//var_dump($this-> form);
-//var_dump($this-> getThreads);
+//var_dump($this-> cat);
+//var_dump($this-> subCat);
 //echo( $this -> form[0]['id']);
 ?>
 <section class="container" id="carousel_container">
 
 	<div class="page-header text-center">
-  		<h3  style="text-shadow:0px 0px 5px #555;">View Sub Category <?php echo $this-> form[0]['name']; ?></h3>
+  		<h3  style="text-shadow:0px 0px 5px #555;">View  Category <?php echo $this-> cat[0]['name']; ?></h3>
   	</div>
-    <label class=" col-sm-12 control-label"><h1  > <small>All User's Information:</small></h1></label>
+    <label class=" col-sm-12 control-label"><h1  > <small>All Categories's Information:</small></h1></label>
      <div class="row">
         
             <article class="col-sm-6">
-                <h3><span class="label label-default">Sub category Name</span>  : <?php echo $this-> form[0]['name']; ?></h3>
-                <h3><span class="label label-default">Registeration Date</span>  : <?php echo $this-> form[0]['reg_date']; ?></h3>   
+                <h3><span class="label label-default">Category Name</span>  : <?php echo $this-> cat[0]['name']; ?></h3>
+                <h3><span class="label label-default">Registeration Date</span>  :<?php echo $this-> cat[0]['reg_date']; ?></h3>   
               </article>
               <article class="col-sm-6">
-              <h3><span class="label label-default">Is Visible</span>  : <?php if($this-> form[0]['is_visible'] == 1) echo "Yes"; else echo "no"; ?></h3>
-              <h3><span class="label label-default">is_LockedDate</span>  : <?php if($this-> form[0]['is_locked'] == 1 ) echo "yes"; else echo "no"; ?></h3>
+              <h3><span class="label label-default">Is Visible</span>  : <?php if($this-> cat[0]['is_visible'] == 1) echo "Yes"; else echo "no"; ?></h3>
+              <h3><span class="label label-default">is_Locked</span>  : <?php if($this-> cat[0]['is_locked'] == 1 ) echo "yes"; else echo "no"; ?></h3>
                     
               </article>
      </div>
@@ -26,7 +26,7 @@
      <label class=" col-sm-12 control-label"><h1  > <small>All Sub Categories's Topics :</small></h1></label>
      <div class="row">
      <?php
-        if(count($this->getThreads) > 0){
+        if(count($this->subCat) > 0){
      ?>
      		<table class="table table-bordered  table-hover table-responsive ">
                             <thead>
@@ -39,14 +39,14 @@
                               <tbody>
                               <?php
 
-                                for($i=0; $i<count($this->getThreads); $i++){
+                                for($i=0; $i<count($this->subCat); $i++){
                                 $count=$i;
                               ?>
                               
                               			<tr>
                                             <td><?php echo ++$count;  ?></td>
-                                            <td><?php echo $this -> getThreads[$i]['title'];  ?></td>
-                                             <td><a class="btn btn-info" target="_blank" href="<?php echo $this-> baseUrl()  ?>/threads/view/id/<?php echo $this-> getThreads[$i]['id']; ?>">View</a></td>
+                                            <td><?php echo $this -> subCat[$i]['name'];  ?></td>
+                                             <td><a class="btn btn-info" target="_blank" href="<?php echo $this-> baseUrl()  ?>/admin/viewsubcat/id/<?php echo $this-> subCat[$i]['id']; ?>">View</a></td>
                                         </tr>
                                <?php
                              }
@@ -59,7 +59,7 @@
                           {
                             ?>
                             </div>
-                            <div class="row alert alert-danger text-center">Sorry No Threads Found On This Data</div>
+                            <div class="row alert alert-danger text-center">Sorry No SubCategory Found With This Data</div>
                             <?php
                           }  
                             ?>

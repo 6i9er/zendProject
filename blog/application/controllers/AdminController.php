@@ -6,14 +6,14 @@ class AdminController extends Zend_Controller_Action
    	private $model = null;
     private $modelSubCat = null;
     private $modelThread = null;
-    private $modelCategory = null;
+    private $modelCat = null;
 
     public function init()
     {
        $this->model = new Application_Model_DbTable_Users;
        $this->modelSubCat = new Application_Model_DbTable_Subcats;
        $this->modelThread = new Application_Model_DbTable_Threads;
-       $this->modelCategory = new Application_Model_DbTable_Categories;
+       $this->modelCat = new Application_Model_DbTable_Categories;
        
         
     }
@@ -580,7 +580,234 @@ class AdminController extends Zend_Controller_Action
             }
          }
     }
+ 
+
+
+
+
+
+
+ /***********************************************************************************************
+************************************************************************************************
+************************ cat Block ***********************************************************
+************************************************************************************************
+***********************************************************************************************/
+
+    //Select All  Categories
+    public function catsAction()
+    {
+        //On every init() of controlleryou have to check is authenticated or not
+        $authorization = Zend_Auth::getInstance();
+        if(!$authorization -> hasIdentity()) {
+            $this->redirect('/users/login');
+        }
+        else
+        {
+            // Check if user is Admin
+            $userObj = $authorization->getIdentity();
+            if($userObj->type == '1'){
+                $this -> view -> data  = $this -> modelCat -> listAll();    
+            }
+            else{
+                $this->redirect('/');       
+            }
+         }
+    }
+
+    // Edit  Category
+
+    public function editcatAction()
+    {
+        //On every init() of controlleryou have to check is authenticated or not
+        $authorization = Zend_Auth::getInstance();
+        if(!$authorization -> hasIdentity()) {
+            $this->redirect('/users/login');
+        }
+        else
+        {
+            // Check if user is Admin
+            $userObj = $authorization->getIdentity();
+            // Create Form Object
+            $form = new Application_Form_Cat();
+            if($userObj->type == '1'){
+                //$this -> view -> data  = $this -> model -> listAllUsers();    
+                // Get User Id
+                $id = $this->getRequest()->getParam('id');
+                if($cat = $this->modelCat->getCatById($id)){
+                    // Found user
+                    $form->populate($cat[0]);
+                }
+                else
+                {
+                    $this->redirect('/');
+                }
+
+
+                if($this->getRequest()->isPost()){
+                    $data = $this->getRequest()->getParams();
+                    
+                    //var_dump($info);
+
+                    if($form->isValid($data)){
+                        if ($this->modelCat->editCat($id, $data))
+                        {
+                             $this->redirect('admin/cats');
+                        }
+                        
+                    }
+                } 
+                $this->view->form = $form;
+            }
+            else{
+                $this->redirect('/');       
+            }
+         }
+    }
+
     
+
+
+
+    // Visible  Cat
+     public function visiblecatAction()
+    {
+        //On every init() of controlleryou have to check is authenticated or not
+        $authorization = Zend_Auth::getInstance();
+        if(!$authorization -> hasIdentity()) {
+            $this->redirect('/users/login');
+        }
+        else
+        {
+            // Check if user is Admin
+            $userObj = $authorization->getIdentity();
+            if($userObj->type == '1'){
+                //$this -> view -> data  = $this -> model -> listAllUsers();    
+                // Get User Id
+                $id = $this->getRequest()->getParam('id');
+                if($cat = $this-> modelCat->getCatById($id)){
+                    // Found user
+                    $this->modelCat->makeVisible($id);
+                    $this->redirect('/admin/cats');
+                }
+                else
+                {
+                    $this->redirect('/');
+                }
+            }
+            else{
+                $this->redirect('/');       
+            }
+         }
+    }
+
+
+    // Visible  Cat
+     public function unvisiblecatAction()
+    {
+        //On every init() of controlleryou have to check is authenticated or not
+        $authorization = Zend_Auth::getInstance();
+        if(!$authorization -> hasIdentity()) {
+            $this->redirect('/users/login');
+        }
+        else
+        {
+            // Check if user is Admin
+            $userObj = $authorization->getIdentity();
+            if($userObj->type == '1'){
+                //$this -> view -> data  = $this -> model -> listAllUsers();    
+                // Get User Id
+                $id = $this->getRequest()->getParam('id');
+                if($cat = $this-> modelCat->getCatById($id)){
+                    // Found user
+                    $this->modelCat->makeInvisible($id);
+                    $this->redirect('/admin/cats');
+                }
+                else
+                {
+                    $this->redirect('/');
+                }
+            }
+            else{
+                $this->redirect('/');       
+            }
+         }
+    }
+
+
+    public function viewcatAction()
+    {
+        //On every init() of controlleryou have to check is authenticated or not
+        $authorization = Zend_Auth::getInstance();
+        if(!$authorization -> hasIdentity()) {
+            $this->redirect('/users/login');
+        }
+        else
+        {
+            // Check if user is Admin
+            $userObj = $authorization->getIdentity();
+            if($userObj->type == '1'){
+                //$this -> view -> data  = $this -> model -> listAllUsers();    
+                // Get User Id
+                $id = $this->getRequest()->getParam('id');
+                if($cat = $this->modelCat->getCatById($id)){
+                    // Found user
+                    $countSubCat = $this->modelSubCat->listAllSubCatById($id); 
+                    $this->view-> cat = $cat;
+                    $this->view-> subCat = $countSubCat;
+                }
+                else
+                {
+                    $this->redirect('/');
+                }
+            }
+            else{
+                $this->redirect('/');       
+            }
+         }
+    }
+
+
+    // Insert New  Cat
+     public function addcatAction()
+    {
+        //On every init() of controlleryou have to check is authenticated or not
+        $authorization = Zend_Auth::getInstance();
+        if(!$authorization -> hasIdentity()) {
+            $this->redirect('/users/login');
+        }
+        else
+        {
+            // Check if user is Admin
+            $userObj = $authorization->getIdentity();
+            if($userObj->type == '1'){
+                
+                
+                $data = $this->getRequest()->getParams();
+                    $form = new Application_Form_Cat();
+                    
+                    if($this->getRequest()->isPost()){                
+                        if($form->isValid($data))
+                        {
+                            
+                            if ($this->modelCat->addCat($data))
+                            {
+                                    $this->redirect('admin/cats');
+                            }
+                                    
+                        }
+                    }
+
+                    $this->view->form = $form; 
+                    
+                
+            }
+            else{
+                $this->redirect('/');       
+            }
+         }
+    }
+
+
 
 
 }
