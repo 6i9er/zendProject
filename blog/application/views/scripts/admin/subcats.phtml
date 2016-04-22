@@ -1,0 +1,66 @@
+<section class="container" id="carousel_container">
+
+
+<div class="page-header text-center">
+  <h3 >All Sub Categories</h3>
+</div>
+
+<!-- Quiz Table -->
+
+  <div class="row ">
+        <a href="<?php echo $this->baseUrl(); ?>/admin/adduser" class="btn btn-info btn-block " > Insert New subcat </a>
+    </div>
+    <div class="row mytable "  id="books_cat">
+      
+        <table class="table table-bordered  table-hover table-responsive ">
+            <thead>
+                <tr class="active ">
+                    <th width="5%">#</th>
+                    <th width="50%"> Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody >
+                <?php
+                    if($this->data){
+                         for($i=0; $i<count($this->data); $i++){
+                               ?>
+                                <tr>
+                                    <td><?php echo $this -> data[$i]['id'] ?></td>
+                                    <td><?php echo $this -> data[$i]['name'] ?></td>
+                                    <td class=""> 
+                                        <a href="<?php echo $this->baseUrl(); ?>/admin/viewsubcat/id/<?php echo $this ->data[$i]['id'] ?>" target="_blank" class="btn btn-info btn-sm">View</a>
+                                        <a href="<?php echo $this->baseUrl(); ?>/admin/editsubcat/id/<?php echo $this ->data[$i]['id'] ?>" target="_blank" class="btn btn-info btn-sm">Edit</a>
+                                        <?php if($this -> data[$i]['is_visible'] == '1'){?>
+                                                <a href="<?php echo $this->baseUrl(); ?>/admin/unvisiblesubcat/id/<?php echo $this ->data[$i]['id'] ?>"  class="btn btn-info btn-sm">unvisible</a>
+
+                                           <?php }else { ?>
+                                                <a href="<?php echo $this->baseUrl(); ?>/admin/visiblesubcat/id/<?php echo $this ->data[$i]['id'] ?>"  class="btn btn-info btn-sm">Visible</a>
+                                            <?php } ?>
+
+                                            <?php if($this -> data[$i]['is_locked'] == '1'){?>
+                                                <a href="<?php echo $this->baseUrl(); ?>/admin/unlocksubcat/id/<?php echo $this ->data[$i]['id'] ?>"  class="btn btn-info btn-sm">unlock</a>
+
+                                           <?php }else { ?>
+                                                <a href="<?php echo $this->baseUrl(); ?>/admin/locksubcat/id/<?php echo $this ->data[$i]['id'] ?>"  class="btn btn-info btn-sm">lock</a>
+                                            <?php } ?>
+                                        <a href="<?php echo $this->baseUrl(); ?>/admin/deleteuser/id/<?php echo $this ->data[$i]['id'] ?>" target="_blank" class="btn btn-info btn-sm">Delete</a>
+                                    </td>
+                                </tr>
+                               <?php
+                           } 
+                    }
+                ?>    
+
+                
+                
+            </tbody>
+        </table>
+        
+    </div>
+        
+   
+</section>
+
+
+        
