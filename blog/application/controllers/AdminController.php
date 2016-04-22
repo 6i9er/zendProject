@@ -551,7 +551,7 @@ class AdminController extends Zend_Controller_Action
             if($userObj->type == '1'){
                 
                 $id = $this->getRequest()->getParam('id');
-                if($subcat = $this-> modelCategory->getCatById($id)){
+                if($subcat = $this-> modelCat->getCatById($id)){
                     // Found Category
 
                     $data = $this->getRequest()->getParams();

@@ -5,148 +5,82 @@ class Application_Model_DbTable_Threads extends Zend_Db_Table_Abstract
 
     protected $_name = 'threads';
 
-    public function listAllThreads(){
 
-        return $this -> fetchAll() -> toArray();
+    public function listSelectedThreads($id)
+    {
 
-    }
-
-    public function listSelectedThreads($id){
-
-        return $this -> fetchAll( 'cat_id='.$id ) -> toArray();
-
-    }
-    
-    
-
-// aly fo2 de sha3'al beha
-    
-
-
-    public function addUser($data){
-
-
-    	$row = $this -> createRow();
-    	$row -> reg_date = date("d - m - Y");
-        $row -> type = '2';
-        $row -> name = $data['name'];
-    	$row -> password = md5($data['password']);
-    	$row -> mail = $data['mail'];
-        $row -> gender = $data['gender'];
-        $row -> signature = $data['signature'];
-        $row -> country = $data['country'];
-        $row -> is_blocked = 0;
-        $row -> prof_pic = $data['prof_pic'];
-    	return $row -> save();
+        return $this->fetchAll('cat_id=' . $id)->toArray();
 
     }
 
+    // Start Tisting
+//====================Add Thread====================================
 
-    
+    public function addThread($data , $u_id , $cat_id)
+    {
 
-    public function getUserById($data){
-    	return $this -> find($data) -> toArray();
-    }
+//title,topic,is_fixed,downloads,is_closed,video,time,id
 
-    public function deleteUser($data){
+        $row = $this->createRow();
+        $row->date = date("d - m - Y");
+        $row->title = $data['title'];
+        $row->cat_id = $cat_id;
+        $row->u_id = $u_id;
+        $row->topic = $data['topic'];
+        $row->is_fixed = 0;
+        //$row->downloads = $data['downloads'];
+        $row->is_closed = 0;
+        $row->video = $data['video'];
+        $row->time = date('h:i:sa');
+        $row->picture = $data['picture'];
 
-    	return $this -> delete('id='.$data);
-
-    }
-
-
-    public function editUser($id , $data){
-		
-		$mydata =array (
-    			'name' => $data['name'] ,
-    			'password' => md5($data['password']),
-                'gender' => $data['gender'],
-                'signature' => $data['signature'],
-                'country' => $data['country']
-
-    	);
-    	$where = "id = " .$id ;
-
-
-    	return $this -> update( $mydata , $where);
+        return $row->save();
 
     }
 
+//====================List All Threads==============================
 
+    public function listAllThreads()
+    {
 
-    public function editAdminUser($id , $data){
-        
-        $mydata =array (
-                'name' => $data['name'] ,
-                'gender' => $data['gender'],
-                'signature' => $data['signature'],
-                'country' => $data['country']
+        return $this->fetchAll()->toArray();
+
+    }
+
+//====================List Single Thread============================
+
+    public function getThreadById($id)
+    {
+
+        return $this->find($id)->toArray();
+
+    }
+
+//====================Delete Thread=================================
+
+    public function deleteThread($id)
+    {
+
+        return $this->delete('id=' . $id);
+
+    }
+
+//====================Edit Thread===================================
+
+    public function editThread($id, $data)
+    {
+
+        $mydata = array(
+            'title' => $data['title'],
+            'topic' => $data['topic'],
+            'video' => $data['video'],
+            'picture'=>$data['picture']
 
         );
-        $where = "id = " .$id ;
 
-
-        return $this -> update( $mydata , $where);
-
-    }
-
-    public function blockUser($id ){
-        
-        $mydata =array (
-                'is_blocked' => 1 
-        );
-        $where = "id = " .$id ;
-
-
-        return $this -> update( $mydata , $where);
+        $where = "id = " . $id;
+        return $this->update($mydata, $where);
 
     }
-
-    public function unblockUser($id ){
-        
-        $mydata =array (
-                'is_blocked' => 0 
-        );
-        $where = "id = " .$id ;
-
-
-        return $this -> update( $mydata , $where);
-
-    }
-
-    public function setUser($id ){
-        
-        $mydata =array (
-                'type' => 2 
-        );
-        $where = "id = " .$id ;
-
-
-        return $this -> update( $mydata , $where);
-
-    }
-
-    public function setAdmin($id ){
-        
-        $mydata =array (
-                'type' => 1 
-        );
-        $where = "id = " .$id ;
-
-
-        return $this -> update( $mydata , $where);
-
-    }
-    public function countThreads($id){
-
-        // 3lashan ageb al count bta2hom
-        //return $this ->fetchAll('cat_id ='.$id.'');
-
-        return $this ->fetchAll('cat_id ='.$id.'')->toArray();
-    }
-
-
-
 
 }
-

@@ -40,7 +40,7 @@
                                     {
                                 ?>
                                 <div class="text-right">
-                                    <a href="insert.php" class="btn btn-info ">Insert News</a>
+                                    <a href="<?php echo $this->baseUrl(); ?>/threads/add/id/<?php echo  $this->subCat[0]['id'];  ?>" class="btn btn-info ">Insert New Thread</a>
                                 </div>
 
                                 <?php
@@ -101,8 +101,8 @@
 
                                           ?>
                                           <div class="text-right">
-                                            <a href="<?php echo $this-> baseUrl(); ?>/threads/edit/id/<?php echo $this-> thread[$k]['id']; ?>" target="_blank" class="btn btn-info ">Edit News</a>
-                                            <a href="<?php echo $this-> baseUrl(); ?>/threads/index/id/<?php echo $this-> thread[$k]['id']; ?>" target="_blank" class="btn btn-info ">Delete News</a>
+                                            <a href="<?php echo $this-> baseUrl(); ?>/threads/edit/id/<?php echo $this-> thread[$k]['id']; ?>" target="_blank" class="btn btn-info ">Edit Thread</a>
+                                            <a href="<?php echo $this-> baseUrl(); ?>/threads/delete/id/<?php echo $this-> thread[$k]['id']; ?>" target="_blank" class="btn btn-info ">Delete Thread</a>
                                           </div>
                                           <?php
                                             }
