@@ -25,6 +25,17 @@ class Application_Model_DbTable_Subcats extends Zend_Db_Table_Abstract
 
     }
 
+
+    public function listVisibleSubCats(){
+
+        return $this -> fetchAll('is_visible =1') -> toArray();
+
+    }
+
+    public function getVisibleSubCatById($data){
+        return $this -> fetchAll('is_visible =1') -> find($data) -> toArray();
+    }
+
     public function getSubCatById($data){
     	return $this -> find($data) -> toArray();
     }

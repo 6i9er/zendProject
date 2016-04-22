@@ -1,49 +1,74 @@
 <section class="container" id="carousel_container">
-    <div class="row">
+
+<?php
+
+?>
+   
+    <?php
+
+    /*
+    for($i=0; $i<count($this->category); $i++){
+      echo $this->category[$i]['id'] ." : " . $this->category[$i]['name']."<BR>";
+      for($k=0; $k<count($this->subCat); $k++){
+        $cat_id=$i+1;
+        
+        if($this->subCat[$k]['cat_id'] == $cat_id)
+        {
+          $sum=0;
+          for($t=0 ; $t<count($this->thread) ; $t++)
+          {
+            $subcat_id=$k+1;
+            if($this->thread[$t]['cat_id'] == $subcat_id)
+            {
+              $sum++;
+            }
+          }
+
+          echo $this->subCat[$k]['name']."  " . $sum ." Topic  " ."<br>";
+           
+        }
+
+      }
+      echo "<hr>";
+    }
+*/
+
+    for($i=0; $i<count($this->category); $i++){
+    ?>
+     <div class="row">
         <div class="panel panel-default">
-          <div class="panel-heading">Forum 1</div>
+          <div class="panel-heading"><?php echo  $this->category[$i]['name'] ?></div>
           <div class="panel-body">
-              <div class="row"><div class="span7 glyphicon glyphicon-plus"><a href="#"> Sub Form1</a></div><div class="span4"> 3 Topics</div>  </div><hr>
+          <?php
+            for($k=0; $k<count($this->subCat); $k++){
+              $cat_id=$i+1;
               
-              <div class="row"><div class="span7 glyphicon glyphicon-plus"><a href="#"> Sub Form1</a></div><div class="span4"> 3 Topics</div>  </div><hr>
+              if($this->subCat[$k]['cat_id'] == $cat_id)
+              {
+                $sum=0;
+                for($t=0 ; $t<count($this->thread) ; $t++)
+                {
+                  $subcat_id=$k+1;
+                  if($this->thread[$t]['cat_id'] == $subcat_id)
+                  {
+                    $sum++;
+                  }
+                }
 
-              <div class="row"><div class="span7 glyphicon glyphicon-plus"><a href="#"> Sub Form1</a></div><div class="span4"> 3 Topics</div>  </div><hr>
-
-              <div class="row"><div class="span7 glyphicon glyphicon-plus"><a href="#"> Sub Form1</a></div><div class="span4"> 3 Topics</div>  </div><hr>
+          ?>
+              <div class="row"><div class="span7 glyphicon glyphicon-plus"><a href="<?php echo $this->baseUrl() ?>/subcats/view/id/<?php echo $subcat_id ?>"> <?php echo $this->subCat[$k]['name'] ?></a></div><div class="span4"> <?php echo $sum ?>Topics</div>  </div><hr>
+              
+              <?php
+            }
+          }
+              ?>
           </div>
         </div>
     </div>
-
-
-    <div class="row">
-        <div class="panel panel-default">
-          <div class="panel-heading">Forum 1</div>
-          <div class="panel-body">
-              <div class="row"><div class="span7 glyphicon glyphicon-plus"><a href="#"> Sub Form1</a></div><div class="span4"> 3 Topics</div>  </div><hr>
-              
-              <div class="row"><div class="span7 glyphicon glyphicon-plus"><a href="#"> Sub Form1</a></div><div class="span4"> 3 Topics</div>  </div><hr>
-
-              <div class="row"><div class="span7 glyphicon glyphicon-plus"><a href="#"> Sub Form1</a></div><div class="span4"> 3 Topics</div>  </div><hr>
-
-              <div class="row"><div class="span7 glyphicon glyphicon-plus"><a href="#"> Sub Form1</a></div><div class="span4"> 3 Topics</div>  </div><hr>
-          </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="panel panel-default">
-          <div class="panel-heading">Forum 1</div>
-          <div class="panel-body">
-              <div class="row"><div class="span7 glyphicon glyphicon-plus"><a href="#"> Sub Form1</a></div><div class="span4"> 3 Topics</div>  </div><hr>
-              
-              <div class="row"><div class="span7 glyphicon glyphicon-plus"><a href="#"> Sub Form1</a></div><div class="span4"> 3 Topics</div>  </div><hr>
-
-              <div class="row"><div class="span7 glyphicon glyphicon-plus"><a href="#"> Sub Form1</a></div><div class="span4"> 3 Topics</div>  </div><hr>
-
-              <div class="row"><div class="span7 glyphicon glyphicon-plus"><a href="#"> Sub Form1</a></div><div class="span4"> 3 Topics</div>  </div><hr>
-          </div>
-        </div>
-    </div>
+    <?php
+  }
+    ?>
+    
   </section>
 
 

@@ -5,6 +5,24 @@ class Application_Model_DbTable_Threads extends Zend_Db_Table_Abstract
 
     protected $_name = 'threads';
 
+    public function listAllThreads(){
+
+        return $this -> fetchAll() -> toArray();
+
+    }
+
+    public function listSelectedThreads($id){
+
+        return $this -> fetchAll( 'cat_id='.$id ) -> toArray();
+
+    }
+    
+    
+
+// aly fo2 de sha3'al beha
+    
+
+
     public function addUser($data){
 
 
@@ -24,11 +42,7 @@ class Application_Model_DbTable_Threads extends Zend_Db_Table_Abstract
     }
 
 
-    public function listAllSubCats(){
-
-    	return $this -> fetchAll() -> toArray();
-
-    }
+    
 
     public function getUserById($data){
     	return $this -> find($data) -> toArray();

@@ -24,12 +24,12 @@ class Application_Form_User extends Zend_Form
 	$email = new Zend_Form_Element_Text("mail");
 	$email->setRequired();
 	$email->addValidator(new Zend_Validate_EmailAddress());
-	$email->addValidator(new Zend_Validate_Db_NoRecordExists(
+	/*$email->addValidator(new Zend_Validate_Db_NoRecordExists(
 	    array(
 		  'table' => 'users',
 		  'field' => 'mail'
 	    )
-	));
+	));*/
 	$email->setlabel("Email:");
 	$email->setAttrib("class","form-control");
 	$email->setAttrib("placeholder","Enter your Email");

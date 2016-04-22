@@ -8,7 +8,12 @@ class Application_Model_DbTable_Categories extends Zend_Db_Table_Abstract
     public function getCatById($data){
         return $this -> find($data) -> toArray();
     }
+    
+    public function listVisibleCats(){
 
+        return $this -> fetchAll('is_visible =1') -> toArray();
+
+    }
 }
     /*
     
