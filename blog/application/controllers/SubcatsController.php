@@ -69,14 +69,17 @@ class SubcatsController extends Zend_Controller_Action
                 $this->view-> thread = $threads;
                 $this->view-> subCat = $subcat;
                 $this->view-> comments = $comments;
-                $this->view-> is_admin = $is_admin;
+                /*$this->view-> is_admin = $is_admin;
+                $this->view-> is_loged = $is_loged;
+                $this->view-> user_id = $user_id;*/
+            }
+            $this->view-> is_admin = $is_admin;
                 $this->view-> is_loged = $is_loged;
                 $this->view-> user_id = $user_id;
-            }
-            else
+            /*else
             {
                 $this->redirect('/');
-            }
+            }*/
         }
         else
         {

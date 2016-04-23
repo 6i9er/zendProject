@@ -1,3 +1,104 @@
-<p>
-    Added
-</p>
+<section class="container" id="carousel_container">
+    <div class="row">
+      <div class="span12">
+        
+        
+        <!-- Page header -->
+                              	<div class="page-header text-center">
+                              		<h3  style="text-shadow:0px 0px 5px #555;"><?php echo $this->thread[0]['title'] ?></h3>
+                              	</div>
+                                
+                                <div class="row">
+                                	<?php echo $this-> thread[0]['topic']; ?>
+                                </div>
+                                
+                                <?php
+                                	if(trim($this-> thread[0]['picture']) != ""){
+                                ?>
+                                <div class="page-header text-left">
+                              		<label class=" col-sm-12 control-label"><h1  > <small>Photo Gallery :</small></h1></label>
+                              	</div>
+                                <div class="row">
+                                <img class="col-sm-12 img-thumbnails " height="300" src="<?php echo $this->baseUrl(); ?>/uploads/threads/<?php echo $this-> thread[0]['picture']; ?>">
+                                </div>
+                                <?php
+                                	}
+                                	if(trim($this-> thread[0]['picture']) != ""){
+                                ?>
+                                
+                                <div class="page-header text-left">
+                              		<label class=" col-sm-12 control-label"><h1  > <small>Videos :</small></h1></label>
+                              	</div>
+                                <div class="row">
+                                	<iframe width="560" height="315" src="//www.youtube.com/embed/<?php echo $this-> thread[0]['vidio'] ?>" frameborder="0" allowfullscreen></iframe>
+                                 </div>
+                                 <?php
+                             	}
+                                 ?>
+                                 
+                                
+                                
+        
+      </div>
+    </div>
+  </section>
+  
+  <!-- Comments Section -->
+  <div class="cleaner"></div>
+  
+  	
+    <section class="container" id="carousel_container">
+        <div class="row">
+              <h5>Comments</h5>
+              <ol class="comments first_level">
+              	<?php 
+              	#Topic Not Closed
+              	#User Is Admin
+              	# User is Loged in
+              	#
+              	if(  ($this-> is_loged == 1  and $this-> is_admin == 1) or ($this-> is_loged and $this->thread[0]['is_closed'] == 0 and $this-> is_admin == 0)){
+              	?>
+                <li>
+                	<?php echo $this-> form ;?>
+
+                </li>
+                <?php
+				}
+				if(count($this->comments) > 0){
+					// Lazm A3raf azay ha3ml Join 3shan ageb byanat al user
+					for($i=0; $i<count($this->comments) ; $i++){
+                ?>
+                
+                <li>
+                  <article class="comment_box commentbox1">
+    
+                    <div class="gravatar">
+                      <img src="images/avator.png" alt="author 2" />
+                    </div>
+                    <div class="comment_text">
+                      <div class="comment_author">Danny <span class="date"><?php echo $this->comments[$i]['date']  ?></span> <span class="time"><?php $this->comments[$i]['time'] ?></span></div>
+                      <p><?php echo $this->comments[$i]['comment'] ?></p>
+                      <?php
+                      if($this -> is_loged == 1 and ($this -> is_admin == 1 or  $this -> user_id == $this-> thread[$k]['u_id'] ) )
+                        {
+                      ?>
+                      <div class="reply"><a href="<?php echo $this->baseUrl(); ?>/comments/edit/id/<?php echo $this->comments[$i]['id'] ?>/thread_id/<?php echo $this-> thread[0]['id']; ?>">Edit</a>  <a href="<?php echo $this->baseUrl(); ?>/comments/delete/id/<?php echo $this->comments[$i]['id'] ?>/thread_id/<?php echo $this-> thread[0]['id']; ?>">Delete</a></div>
+                    <?php
+						}
+                    ?>
+                    </div>
+                    <div class="cleaner"></div>
+                  </article>
+                </li>
+
+                <?php
+                	}
+				}
+                ?>
+              </ol>
+              
+              
+         </div> 
+    </section>
+  
+  	

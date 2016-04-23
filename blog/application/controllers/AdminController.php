@@ -520,7 +520,7 @@ class AdminController extends Zend_Controller_Action
                 $id = $this->getRequest()->getParam('id');
                 if($subcat = $this->modelSubCat->getSubCatById($id)){
                     // Found user
-                    $countThread = $this->modelThread->countThreads($id); 
+                    $countThread = $this->modelThread->listSelectedThreads($id); 
                     $this->view-> form = $subcat;
                     $this->view-> getThreads = $countThread;
                 }

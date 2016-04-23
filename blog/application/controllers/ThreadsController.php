@@ -4,13 +4,13 @@ class ThreadsController extends Zend_Controller_Action
 {
 
     private $model = null;
-    private $modelSubCat = null;
+    private $modelComments = null;
 
     public function init()
     {
-       $this->model = new Application_Model_DbTable_Threads;
+       $this-> model = new Application_Model_DbTable_Threads;
 
-        $this->modelSubCat = new Application_Model_DbTable_Subcats;
+        $this-> modelComments = new Application_Model_DbTable_Comments;
        
         
     }
@@ -18,25 +18,59 @@ class ThreadsController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        // De Bta3t El View
-        //On every init() of controlleryou have to check is authenticated or not
+        $is_admin = 0;
+        $is_loged = 0;
+        $user_id = 0;
         $authorization = Zend_Auth::getInstance();
         if(!$authorization -> hasIdentity()) {
-            $this->redirect('/users/login');
+            //$this->redirect('/users/login');
         }
         else
         {
             // Check if user is Admin
-            $userObj = $authorization->getIdentity();
+            $userObj = $authorization-> getIdentity();
             if($userObj->type == '1'){
-                $this -> view -> data  = $this -> model -> listAllThreads();
+                $is_admin = 1;
             }
-            else{
-                $this->redirect('/');       
-            }
+            $is_loged = 1;
+            $user_id = $userObj-> id;
+            
          }
+
+
+
+        $id = $this->getRequest()->getParam('id');
+        if($thread = $this-> model->getThreadById($id) ){
+            
+         //echo();
+                $data = $this->getRequest()->getParams();
+                $form = new Application_Form_Comments();
+                if($this->getRequest()->isPost()){                
+                    if($form->isValid($data))
+                    {
+                        if ($this->modelComments->addComment($data , $id , $user_id ))
+                            $this->redirect('threads/index/id/'.$id);        
+                    }
+                }
+                 $comments= $this-> modelComments -> listSelectedComments($thread[0]['id']);  
+                $this->view-> thread = $thread;
+                $this->view-> comments = $comments;
+                $this->view-> is_admin = $is_admin;
+                $this->view-> is_loged = $is_loged;
+                $this->view-> user_id = $user_id;
+                $this->view-> form = $form;
+            
+        }
+        else
+        {
+            $this->redirect('/');
+        }
         
     }
+
+
+
+
 
 //====================Add Thread==================================
 

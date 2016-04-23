@@ -147,6 +147,22 @@ class UsersController extends Zend_Controller_Action
                 $this->view->form = $form; 
     }
 
+    public function logoutAction()
+    {
+        //On every init() of controlleryou have to check is authenticated or not
+        $authorization = Zend_Auth::getInstance();
+        if(!$authorization -> hasIdentity()) {
+            $this->redirect('/users/login');
+        }
+        else
+        {
+            // Check if user is Admin
+            $authorization->clearIdentity();
+                $this->redirect('/');       
+            
+         }
+    }
+
 
 }
 
