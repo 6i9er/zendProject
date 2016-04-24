@@ -68,7 +68,7 @@
                                         <?php
                                         if($this->fixedThread[$k]['picture'] != ""){
                                         ?>
-                                            <a href="blog_post.html"><img src="<?php echo $this-> baseUrl() ?>/uploads/threads/<?php echo $this-> fixedThread[$k]['picture'] ; ?>" alt="Model Girl 1" class="image_frame_300 img-polaroid"/></a>
+                                            <a href="<?php echo $this-> baseUrl(); ?>/threads/index/id/<?php echo $this-> fixedThread[$k]['id']; ?> "><img src="<?php echo $this-> baseUrl() ?>/uploads/threads/<?php echo $this-> fixedThread[$k]['picture'] ; ?>" alt="Model Girl 1" class="image_frame_300 img-polaroid"/></a>
                                             <?php
                                             }
                                             ?>
@@ -171,7 +171,7 @@
                                         <?php
                                         if($this->unFixedThread[$k]['picture'] != ""){
                                         ?>
-                                            <a href="blog_post.html"><img src="<?php echo $this-> baseUrl() ?>/uploads/threads/<?php echo $this-> unFixedThread[$k]['picture'] ; ?>" alt="Model Girl 1" class="image_frame_300 img-polaroid"/></a>
+                                            <a href="<?php echo $this-> baseUrl(); ?>/threads/index/id/<?php echo $this-> unFixedThread[$k]['id']; ?>"><img src="<?php echo $this-> baseUrl() ?>/uploads/threads/<?php echo $this-> unFixedThread[$k]['picture'] ; ?>" alt="Model Girl 1" class="image_frame_300 img-polaroid"/></a>
                                             <?php
                                             }
                                             ?>
