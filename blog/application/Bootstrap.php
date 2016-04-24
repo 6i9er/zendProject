@@ -24,10 +24,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$view->headLink()->appendStylesheet($view->baseUrl().'/css/bootstrap-responsive.min.css');
 		//$view->headLink()->appendStylesheet($view->baseUrl().'http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css');
 		$view->headLink()->appendStylesheet($view->baseUrl().'/css/templatemo_style.css');
+		$view->headLink()->appendStylesheet($view->baseUrl().'/css/jssocials-theme-flat.css');
+		$view->headLink()->appendStylesheet($view->baseUrl().'/css/jssocials.css');
 		// Set the initial JS to load:
 		$view->headScript()->prependFile($view->baseUrl().'/js/jquery-1.12.0.min.js');
 		$view->headScript()->appendFile($view->baseUrl().'/js/bootstrap.min.js');
 		$view->headScript()->appendFile($view->baseUrl().'/js/ckeditor.js');
+		$view->headScript()->appendFile($view->baseUrl().'/js/jssocials.min.js');
+		$view->headScript()->appendFile($view->baseUrl().'/js/share.js');
 
 		
 
