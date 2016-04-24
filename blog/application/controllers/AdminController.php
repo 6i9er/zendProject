@@ -7,13 +7,17 @@ class AdminController extends Zend_Controller_Action
     private $modelSubCat = null;
     private $modelThread = null;
     private $modelCat = null;
+    private $modelStatus = null;
+    private $modelComments = null;
 
     public function init()
     {
        $this->model = new Application_Model_DbTable_Users;
        $this->modelSubCat = new Application_Model_DbTable_Subcats;
        $this->modelThread = new Application_Model_DbTable_Threads;
+       $this->modelComments = new Application_Model_DbTable_Comments;
        $this->modelCat = new Application_Model_DbTable_Categories;
+       $this->modelStatus = new Application_Model_DbTable_Site;
        
         
     }
@@ -42,6 +46,61 @@ class AdminController extends Zend_Controller_Action
                 $this->redirect('/');       
             }
          }
+    }
+
+
+    public function loginAction()
+    {
+                $authorization = Zend_Auth::getInstance();
+                if($authorization -> hasIdentity()) {
+                    //$this->redirect('/');
+                }
+               $data = $this->getRequest()->getParams();
+                $form = new Application_Form_User();
+                $form -> removeElement('prof_pic');
+                $form -> removeElement('gender');
+                $form -> removeElement('country');
+                $form -> removeElement('signature');
+                $form -> removeElement('name');
+
+                if($this->getRequest()->isPost()){
+                    if($form->isValid($data)){
+                        $username= $this->_request->getParam('mail');
+                        $password= $this->_request->getParam('password');
+                        // get the default db adapter
+                        $db = Zend_Db_Table::getDefaultAdapter();
+                        //create the auth adapter
+                        $authAdapter = new Zend_Auth_Adapter_DbTable($db, 'users','mail', 'password');
+                        //set the email and password
+                        $authAdapter -> setIdentity($username);
+                        $authAdapter->setCredential(md5($password));
+                        //authenticate
+                        $result = $authAdapter->authenticate();
+                        if ($result->isValid()) {
+                             //var_dump($result);
+                            $mail = $this->model->checkMail($username);
+                            if($mail[0]['is_blocked'] == 0){
+                                      
+                                $auth = Zend_Auth::getInstance();
+                                $storage = $auth->getStorage();
+                                //de btrg3 al row kaml  w a5tar ana aly howa 3azio
+                                $storage->write($authAdapter->getResultRowObject(array('id' , 'prof_pic' ,'type' , 'mail' , 'name')));
+                                $this->model->updateLogin($mail[0]['id']);
+                                $this->redirect('/');
+                            }
+                            else{
+                            ?><div class="alert alert-danger text-center">Sorry This User Is Blocked</div><?php
+                            }
+                        }else{
+                            ?><div class="alert alert-danger text-center">Wrong Data</div><?php
+                        }
+
+                        /*if ($this->model->addUser($data))
+                        $this->redirect('users/index');*/
+                    }
+                }
+
+                $this->view->form = $form; 
     }
 
 
@@ -678,6 +737,8 @@ class AdminController extends Zend_Controller_Action
         }
         else
         {
+                $Threads = $this -> modelThread -> listAllThreads($id);
+                $comments= $this -> modelComments -> listAllComments(); 
             // Check if user is Admin
             $userObj = $authorization->getIdentity();
             if($userObj->type == '1'){
@@ -800,6 +861,65 @@ class AdminController extends Zend_Controller_Action
                     $this->view->form = $form; 
                     
                 
+            }
+            else{
+                $this->redirect('/');       
+            }
+         }
+    }
+
+
+
+    //====================== Admin Site===========================/
+
+    public function siteAction()
+    {
+        //On every init() of controlleryou have to check is authenticated or not
+        $authorization = Zend_Auth::getInstance();
+        if(!$authorization -> hasIdentity()) {
+            $this->redirect('/users/login');
+        }
+        else
+        {
+            // Check if user is Admin
+            $userObj = $authorization->getIdentity();
+            // Create Form Object
+            $form = new Application_Form_Site();
+            if($userObj->type == '1'){
+                //$this -> view -> data  = $this -> model -> listAllUsers();    
+                // Get User Id
+                $id = 1;
+                if($status = $this->model->getUserById($id)){
+                    // Found user
+                    $form->populate($status[0]);
+                }
+                else
+                {
+                    $this->redirect('/');
+                }
+                    $this->view-> cats = $this -> modelCat -> listAll();
+                    $this->view-> subCats = $this -> modelSubCat -> listAllSubCats();
+                    
+                    $this->view-> users = $this -> model -> listAllUsers();
+                    $this->view-> threads = $this -> modelThread -> listAllThreads();
+                    $this->view-> comments= $this -> modelComments -> listAllComments();
+
+                    $this->view-> status= $this -> modelStatus -> getStatusById(1); 
+
+                if($this->getRequest()->isPost()){
+                    $data = $this->getRequest()->getParams();
+                    
+                    //var_dump($info);
+
+                    if($form->isValid($data)){
+                        if ($this-> modelStatus->setStatus($id, $data))
+                        {
+                             $this->redirect('admin/site');
+                        }
+                        
+                    }
+                } 
+                $this->view->form = $form;
             }
             else{
                 $this->redirect('/');       

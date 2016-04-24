@@ -5,12 +5,32 @@ class ThreadsController extends Zend_Controller_Action
 
     private $model = null;
     private $modelComments = null;
+    private $modelStatus = null;
 
     public function init()
     {
        $this-> model = new Application_Model_DbTable_Threads;
-
+       $this-> modelSubCat = new Application_Model_DbTable_Subcats;
         $this-> modelComments = new Application_Model_DbTable_Comments;
+
+        $is_admin = 0;
+       $this->modelStatus = new Application_Model_DbTable_Site;
+        $auth = Zend_Auth::getInstance();
+            if($auth -> hasIdentity()){
+                $userObj = $auth->getIdentity();
+                if($userObj->type == 1)
+                {
+                    $is_admin =1;
+                }
+            }
+
+        $status = $this-> modelStatus->getStatusById(1);
+               if($status[0]['value'] == 1 or $is_admin == 1){
+               }
+               else
+               {
+                 $this->redirect('site/');
+               }
        
         
     }
@@ -85,26 +105,33 @@ class ThreadsController extends Zend_Controller_Action
         }
         else
         {
+
             // Check if user is Admin
                 $userObj = $authorization->getIdentity();
             $id = $this->getRequest()->getParam('id');
             if($subcat = $this-> modelSubCat->getSubCatById($id)){
-
-                $data = $this->getRequest()->getParams();
-                $form = new Application_Form_Threads();
-                if($this->getRequest()->isPost()){
-                    if($form->isValid($data))
-                    {
-                        $data['picture'] = '';
-                        if($form->getElement('picture')->receive())
+                // 3ak3ak
+                if(($subcat[0]['is_locked'] == '1') or ($userObj-> type == '1')){
+                    $data = $this->getRequest()->getParams();
+                    $form = new Application_Form_Threads();
+                    if($this->getRequest()->isPost()){
+                        if($form->isValid($data))
                         {
-                            $data['picture'] = $form->getElement('picture')->getValue();
+                            $data['picture'] = '';
+                            if($form->getElement('picture')->receive())
+                            {
+                                $data['picture'] = $form->getElement('picture')->getValue();
 
+                            }
+
+                            if ($this->model->addThread($data , $userObj -> id , $id))
+                                $this->redirect('threads/index');
                         }
-
-                        if ($this->model->addThread($data , $userObj -> id , $id))
-                            $this->redirect('threads/index');
                     }
+                }
+                else
+                {
+                    $this->redirect('/');
                 }
 
                     $this->view->form = $form;
@@ -207,6 +234,137 @@ class ThreadsController extends Zend_Controller_Action
     public function viewAction()
     {
                 
+    }
+
+
+    public function closedAction()
+    {
+        //On every init() of controlleryou have to check is authenticated or not
+        $authorization = Zend_Auth::getInstance();
+        if(!$authorization -> hasIdentity()) {
+            $this->redirect('/users/login');
+        }
+        else
+        {
+            // Check if user is Admin
+            $userObj = $authorization->getIdentity();
+            if($userObj->type == '1'){
+                //$this -> view -> data  = $this -> model -> listAllUsers();    
+                // Get User Id
+                $id = $this->getRequest()->getParam('id');
+                $subcat = $this->getRequest()->getParam('subcat');
+                if($thread = $this->model->getThreadById($id)){
+                    
+                    $this->model->closeThread($id);
+                    $this->redirect('/subcats/view/id/'.$subcat);
+                }
+                else
+                {
+                    $this->redirect('/');
+                }
+            }
+            else{
+                $this->redirect('/');       
+            }
+         }
+    }
+
+
+    public function uncloseAction()
+    {
+        //On every init() of controlleryou have to check is authenticated or not
+        $authorization = Zend_Auth::getInstance();
+        if(!$authorization -> hasIdentity()) {
+            $this->redirect('/users/login');
+        }
+        else
+        {
+            // Check if user is Admin
+            $userObj = $authorization->getIdentity();
+            if($userObj->type == '1'){
+                //$this -> view -> data  = $this -> model -> listAllUsers();    
+                // Get User Id
+                $id = $this->getRequest()->getParam('id');
+                $subcat = $this->getRequest()->getParam('subcat');
+                if($thread = $this->model->getThreadById($id)){
+                    
+                    $this->model->uncloseThread($id);
+                    $this->redirect('/subcats/view/id/'.$subcat);
+                }
+                else
+                {
+                    $this->redirect('/');
+                }
+            }
+            else{
+                $this->redirect('/');       
+            }
+         }
+    }
+
+    public function fixedAction()
+    {
+        //On every init() of controlleryou have to check is authenticated or not
+        $authorization = Zend_Auth::getInstance();
+        if(!$authorization -> hasIdentity()) {
+            $this->redirect('/users/login');
+        }
+        else
+        {
+            // Check if user is Admin
+            $userObj = $authorization->getIdentity();
+            if($userObj->type == '1'){
+                //$this -> view -> data  = $this -> model -> listAllUsers();    
+                // Get User Id
+                $id = $this->getRequest()->getParam('id');
+                $subcat = $this->getRequest()->getParam('subcat');
+                if($thread = $this->model->getThreadById($id)){
+                    
+                    $this->model->fixedThread($id);
+                    $this->redirect('/subcats/view/id/'.$subcat);
+                }
+                else
+                {
+                    $this->redirect('/');
+                }
+            }
+            else{
+                $this->redirect('/');       
+            }
+         }
+    }
+
+
+    public function unfixedAction()
+    {
+        //On every init() of controlleryou have to check is authenticated or not
+        $authorization = Zend_Auth::getInstance();
+        if(!$authorization -> hasIdentity()) {
+            $this->redirect('/users/login');
+        }
+        else
+        {
+            // Check if user is Admin
+            $userObj = $authorization->getIdentity();
+            if($userObj->type == '1'){
+                //$this -> view -> data  = $this -> model -> listAllUsers();    
+                // Get User Id
+                $id = $this->getRequest()->getParam('id');
+                $subcat = $this->getRequest()->getParam('subcat');
+                if($thread = $this->model->getThreadById($id)){
+                    
+                    $this->model->unfixedThread($id);
+                    $this->redirect('/subcats/view/id/'.$subcat);
+                }
+                else
+                {
+                    $this->redirect('/');
+                }
+            }
+            else{
+                $this->redirect('/');       
+            }
+         }
     }
 
 }

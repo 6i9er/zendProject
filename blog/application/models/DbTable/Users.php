@@ -22,6 +22,12 @@ class Application_Model_DbTable_Users extends Zend_Db_Table_Abstract
     	return $row -> save();
 
     }
+    
+    public function checkMail($mail){
+
+    return $this -> fetchAll('mail ="'.$mail.'"') -> toArray();
+    }
+    
 
 
     public function listAllUsers(){
@@ -40,21 +46,34 @@ class Application_Model_DbTable_Users extends Zend_Db_Table_Abstract
 
     }
 
+    public function updateLogin($id){
+        
+        $mydata =array (
+                'last_login' => date("d - m - Y")
+
+        );
+        $where = "id = " .$id ;
+
+
+        return $this -> update( $mydata , $where);  
+
+    }
+
 
     public function editUser($id , $data){
 		
 		$mydata =array (
-    			'name' => $data['name'] ,
-    			'password' => md5($data['password']),
+                'name' => $data['name'] ,
+                'password' => md5($data['password']),
                 'gender' => $data['gender'],
                 'signature' => $data['signature'],
                 'country' => $data['country']
 
-    	);
-    	$where = "id = " .$id ;
+        );
+        $where = "id = " .$id ;
 
 
-    	return $this -> update( $mydata , $where);
+        return $this -> update( $mydata , $where);  
 
     }
 
@@ -87,6 +106,7 @@ class Application_Model_DbTable_Users extends Zend_Db_Table_Abstract
         return $this -> update( $mydata , $where);
 
     }
+    
 
     public function unblockUser($id ){
         

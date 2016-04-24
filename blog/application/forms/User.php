@@ -24,15 +24,24 @@ class Application_Form_User extends Zend_Form
 	$email = new Zend_Form_Element_Text("mail");
 	$email->setRequired();
 	$email->addValidator(new Zend_Validate_EmailAddress());
-	/*$email->addValidator(new Zend_Validate_Db_NoRecordExists(
+	$email->setlabel("Email:");
+	$email->setAttrib("class","form-control");
+	$email->setAttrib("placeholder","Enter your Email");
+
+	/*$regemail = new Zend_Form_Element_Text("mail");
+	$regemail->setRequired();
+	$regemail->addValidator(new Zend_Validate_EmailAddress());
+	$regemail->addValidator(new Zend_Validate_Db_NoRecordExists(
 	    array(
 		  'table' => 'users',
 		  'field' => 'mail'
 	    )
-	));*/
-	$email->setlabel("Email:");
-	$email->setAttrib("class","form-control");
-	$email->setAttrib("placeholder","Enter your Email");
+	));
+	$regemail->setlabel("Registeration Email:");
+	$regemail->setAttrib("class","form-control");
+	$regemail->setAttrib("placeholder","Enter your Email");
+
+*/
 	
 	$password = new Zend_Form_Element_Password("password");
 	$password->setRequired();
@@ -41,7 +50,7 @@ class Application_Form_User extends Zend_Form
 	$password->setAttrib("class","form-control");
 
 	$prof_pic = new Zend_Form_Element_File("prof_pic");
-	$prof_pic->setRequired();
+	//$prof_pic->setRequired();
 	$destination = APPLICATION_PATH.'/../public/uploads/users';
         #var_dump($destination); exit();
     $prof_pic->setLabel('Profile Picture :');
@@ -80,7 +89,7 @@ class Application_Form_User extends Zend_Form
 
 	$submit = new Zend_Form_Element_Submit('submit');
 
-	$this->addElements(array($id,$name, $email, $password, $gender , $country , $prof_pic , $signature , $submit ));
+	$this->addElements(array($id,$name,$email, $password, $gender , $country , $prof_pic , $signature , $submit ));
  
 
     }

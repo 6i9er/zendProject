@@ -56,7 +56,7 @@
               	#User Is Admin
               	# User is Loged in
               	#
-              	if(  ($this-> is_loged == 1  and $this-> is_admin == 1) or ($this-> is_loged and $this->thread[0]['is_closed'] == 0 and $this-> is_admin == 0)){
+              	if(  ($this-> is_loged == 1  and $this-> is_admin == 1) or ($this-> is_loged == 1 and $this->thread[0]['is_closed'] == 0 and $this-> is_admin == 0)){
               	?>
                 <li>
                 	<?php echo $this-> form ;?>
@@ -79,7 +79,7 @@
                       <div class="comment_author">Danny <span class="date"><?php echo $this->comments[$i]['date']  ?></span> <span class="time"><?php $this->comments[$i]['time'] ?></span></div>
                       <p><?php echo $this->comments[$i]['comment'] ?></p>
                       <?php
-                      if($this -> is_loged == 1 and ($this -> is_admin == 1 or  $this -> user_id == $this-> thread[$k]['u_id'] ) )
+                      if($this -> is_loged == 1 and ($this -> is_admin == 1 or  $this -> user_id == $this-> comments[$i]['u_id'] ) )
                         {
                       ?>
                       <div class="reply"><a href="<?php echo $this->baseUrl(); ?>/comments/edit/id/<?php echo $this->comments[$i]['id'] ?>/thread_id/<?php echo $this-> thread[0]['id']; ?>">Edit</a>  <a href="<?php echo $this->baseUrl(); ?>/comments/delete/id/<?php echo $this->comments[$i]['id'] ?>/thread_id/<?php echo $this-> thread[0]['id']; ?>">Delete</a></div>

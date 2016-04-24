@@ -9,7 +9,20 @@ class Application_Model_DbTable_Threads extends Zend_Db_Table_Abstract
     public function listSelectedThreads($id)
     {
 
-        return $this->fetchAll('cat_id=' . $id)->toArray();
+        return $this->fetchAll('cat_id=' . $id) ->toArray();
+
+    }
+
+    public function listFixedSelectedThreads($id)
+    {
+
+        return $this->fetchAll('cat_id=' . $id . " and is_fixed= 1") ->toArray();
+
+    }
+    public function listUnFixedSelectedThreads($id)
+    {
+
+        return $this->fetchAll('cat_id=' . $id . " and is_fixed= 0") ->toArray();
 
     }
 
@@ -76,6 +89,63 @@ class Application_Model_DbTable_Threads extends Zend_Db_Table_Abstract
             'video' => $data['video'],
             'picture'=>$data['picture']
 
+        );
+
+        $where = "id = " . $id;
+        return $this->update($mydata, $where);
+
+    }
+
+
+//=================== Close Thread =======================
+
+    public function closeThread($id)
+    {
+
+        $mydata = array(
+            'is_closed' => 1
+        );
+
+        $where = "id = " . $id;
+        return $this->update($mydata, $where);
+
+    }
+
+//=================== un Close Thread =======================
+
+    public function uncloseThread($id)
+    {
+
+        $mydata = array(
+            'is_closed' => 0
+        );
+
+        $where = "id = " . $id;
+        return $this->update($mydata, $where);
+
+    }
+
+    //=================== Close Thread =======================
+
+    public function fixedThread($id)
+    {
+
+        $mydata = array(
+            'is_fixed' => 1
+        );
+
+        $where = "id = " . $id;
+        return $this->update($mydata, $where);
+
+    }
+
+//=================== un Close Thread =======================
+
+    public function unfixedThread($id)
+    {
+
+        $mydata = array(
+            'is_fixed' => 0
         );
 
         $where = "id = " . $id;

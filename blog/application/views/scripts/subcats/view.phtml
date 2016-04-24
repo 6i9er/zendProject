@@ -33,7 +33,7 @@
         
         <!-- Page header -->
                                 <div class="page-header text-center">
-                                    <h3 ><?php echo $this->subCat[0]['name']; ?></h3>
+                                    <h3 ><?php echo $this-> subCat[0]['name']; ?></h3>
                                 </div>
                                 <?php
                                 if($this -> is_loged == 1 )
@@ -50,13 +50,13 @@
                                     
                                     <section id="content">
                                     <?php
-                                        for($k=0; $k < count($this-> thread); $k++){
+                                        for($k=0; $k < count($this-> fixedThread); $k++){
                                             $cat_id=$k+1; 
                                               $sum=0;
                                               for($t=0 ; $t<count($this->comments) ; $t++)
                                               {
                                                 $thread_id=$k+1;
-                                                if($this->comments[$t]['thread_id'] == $this -> thread[$k]['id'])
+                                                if($this->comments[$t]['thread_id'] == $this -> fixedThread[$k]['id'])
                                                 {
                                                   $sum++;
                                                 }
@@ -66,16 +66,16 @@
 
                                         <article class="post_box"> 
                                         <?php
-                                        if($this->thread[$k]['picture'] != ""){
+                                        if($this->fixedThread[$k]['picture'] != ""){
                                         ?>
-                                            <a href="blog_post.html"><img src="<?php echo $this-> baseUrl() ?>/uploads/threads/<?php echo $this-> thread[$k]['picture'] ; ?>" alt="Model Girl 1" class="image_frame_300 img-polaroid"/></a>
+                                            <a href="blog_post.html"><img src="<?php echo $this-> baseUrl() ?>/uploads/threads/<?php echo $this-> fixedThread[$k]['picture'] ; ?>" alt="Model Girl 1" class="image_frame_300 img-polaroid"/></a>
                                             <?php
                                             }
                                             ?>
-                                          <h2><?php echo $this-> thread[$k]['title'] ?></h2>
+                                          <h2><?php echo $this-> fixedThread[$k]['title'] ?></h2>
                                           <p> 
                                             <?php
-                                                $words=strip_tags($this -> thread[$k]['topic']);
+                                                $words=strip_tags($this -> fixedThread[$k]['topic']);
                                                 $array=explode(" ",$words);
                                                 if(count($array) <= 30)
                                                     {
@@ -92,23 +92,50 @@
 
                                                 ?>
                                           </p>
-                                          <a href="<?php echo $this-> baseUrl(); ?>/threads/index/id/<?php echo $this-> thread[$k]['id']; ?>" class="btn btn-danger">Read more...</a>
+                                          <a href="<?php echo $this-> baseUrl(); ?>/threads/index/id/<?php echo $this-> fixedThread[$k]['id']; ?>" class="btn btn-danger">Read more...</a>
                                           <div class="cleaner"></div>
                                           <?php  
-                                            if($this -> is_loged == 1 and ($this -> is_admin == 1 or  $this -> user_id == $this-> thread[$k]['u_id'] ) )
+                                            if($this -> is_loged == 1 and ($this -> is_admin == 1 or  $this -> user_id == $this-> fixedThread[$k]['u_id'] ) )
                                             {
 
 
                                           ?>
                                           <div class="text-right">
-                                            <a href="<?php echo $this-> baseUrl(); ?>/threads/edit/id/<?php echo $this-> thread[$k]['id']; ?>" target="_blank" class="btn btn-info ">Edit Thread</a>
-                                            <a href="<?php echo $this-> baseUrl(); ?>/threads/delete/id/<?php echo $this-> thread[$k]['id']; ?>" target="_blank" class="btn btn-info ">Delete Thread</a>
+                                          <?php
+                                          if($this -> is_admin == 1){
+                                              if($this-> fixedThread[$k]['is_fixed'] == 1 ){
+                                                ?>
+                                                  <a href="<?php echo $this-> baseUrl(); ?>/threads/unfixed/id/<?php echo $this-> fixedThread[$k]['id']; ?>/subcat/<?php echo $this-> subCat[0]['id']; ?>" class="btn btn-info ">Unfixed</a>
+                                                <?php    
+                                              }
+                                              else
+                                                {
+                                                ?>
+                                                  <a href="<?php echo $this-> baseUrl(); ?>/threads/fixed/id/<?php echo $this-> fixedThread[$k]['id']; ?>/subcat/<?php echo $this-> subCat[0]['id']; ?>" class="btn btn-info ">fixed</a>
+                                                <?php    
+                                              }
+
+                                              if($this-> fixedThread[$k]['is_closed'] == 1 ){
+                                                ?>
+                                                  <a href="<?php echo $this-> baseUrl(); ?>/threads/unclose/id/<?php echo $this-> fixedThread[$k]['id']; ?>/subcat/<?php echo $this-> subCat[0]['id']; ?>"  class="btn btn-info ">Un Close</a>
+                                                <?php    
+                                              }
+                                              else
+                                                {
+                                                ?>
+                                                  <a href="<?php echo $this-> baseUrl(); ?>/threads/closed/id/<?php echo $this-> unFixedThread[$k]['id']; ?>/subcat/<?php echo $this-> subCat[0]['id']; ?>"  class="btn btn-info ">close</a>
+                                                <?php    
+                                              }
+                                          }
+                                          ?>
+                                            <a href="<?php echo $this-> baseUrl(); ?>/threads/edit/id/<?php echo $this-> fixedThread[$k]['id']; ?>" target="_blank" class="btn btn-info ">Edit Thread</a>
+                                            <a href="<?php echo $this-> baseUrl(); ?>/threads/delete/id/<?php echo $this-> fixedThread[$k]['id']; ?>" target="_blank" class="btn btn-info ">Delete Thread</a>
                                           </div>
                                           <?php
                                             }
                                           ?>
                                           <div class="post_meta">
-                                            Posted: <i><?php echo $this-> thread[$k]['date'] ?></i> 
+                                            Posted: <i><?php echo $this-> fixedThread[$k]['date'] ?></i> 
                                             <span><?php echo $sum; ?> Comments</span>
                                           </div>
                                 
@@ -119,7 +146,109 @@
 
                                     </section>
                                 </div>
+
+
+                                <!-- Un Fixed Threads -->
+                                <div class="row">
+                                    
+                                    <section id="content">
+                                    <?php
+                                        for($k=0; $k < count($this-> unFixedThread); $k++){
+                                            $cat_id=$k+1; 
+                                              $sum=0;
+                                              for($t=0 ; $t<count($this->comments) ; $t++)
+                                              {
+                                                $thread_id=$k+1;
+                                                if($this->comments[$t]['thread_id'] == $this -> unFixedThread[$k]['id'])
+                                                {
+                                                  $sum++;
+                                                }
+                                              }
+                                              //echo "<h1>".$this->thread[$k]['picture']."</h1>";
+                                    ?>
+
+                                        <article class="post_box"> 
+                                        <?php
+                                        if($this->unFixedThread[$k]['picture'] != ""){
+                                        ?>
+                                            <a href="blog_post.html"><img src="<?php echo $this-> baseUrl() ?>/uploads/threads/<?php echo $this-> unFixedThread[$k]['picture'] ; ?>" alt="Model Girl 1" class="image_frame_300 img-polaroid"/></a>
+                                            <?php
+                                            }
+                                            ?>
+                                          <h2><?php echo $this-> unFixedThread[$k]['title'] ?></h2>
+                                          <p> 
+                                            <?php
+                                                $words=strip_tags($this -> unFixedThread[$k]['topic']);
+                                                $array=explode(" ",$words);
+                                                if(count($array) <= 30)
+                                                    {
+                                                        echo $words."<br>"; 
+                                                    }
+                                                else
+                                                    {
+                                                        $array=explode(" ",$words);
+                                                        $me=array_slice($array,0,30);
+                                                        echo implode(" ",$me)."<br>";
+                                                    }
+
+
+
+                                                ?>
+                                          </p>
+                                          <a href="<?php echo $this-> baseUrl(); ?>/threads/index/id/<?php echo $this-> unFixedThread[$k]['id']; ?>" class="btn btn-danger">Read more...</a>
+                                          <div class="cleaner"></div>
+                                          <?php  
+                                            if($this -> is_loged == 1 and ($this -> is_admin == 1 or  $this -> user_id == $this-> unFixedThread[$k]['u_id'] ) )
+                                            {
+
+
+                                          ?>
+                                          <div class="text-right">
+                                          <?php
+                                          if($this -> is_admin == 1){
+                                              if($this-> unFixedThread[$k]['is_fixed'] == 1 ){
+                                                ?>
+                                                  <a href="<?php echo $this-> baseUrl(); ?>/threads/unfixed/id/<?php echo $this-> unFixedthread[$k]['id']; ?>/subcat/<?php echo $this-> subCat[0]['id']; ?>" class="btn btn-info ">Unfixed</a>
+                                                <?php    
+                                              }
+                                              else
+                                                {
+                                                ?>
+                                                  <a href="<?php echo $this-> baseUrl(); ?>/threads/fixed/id/<?php echo $this-> unFixedThread[$k]['id']; ?>/subcat/<?php echo $this-> subCat[0]['id']; ?>" class="btn btn-info ">fixed</a>
+                                                <?php    
+                                              }
+
+                                              if($this-> unFixedThread[$k]['is_closed'] == 1 ){
+                                                ?>
+                                                  <a href="<?php echo $this-> baseUrl(); ?>/threads/unclose/id/<?php echo $this-> unFixedThread[$k]['id']; ?>/subcat/<?php echo $this-> subCat[0]['id']; ?>"  class="btn btn-info ">Un Close</a>
+                                                <?php    
+                                              }
+                                              else
+                                                {
+                                                ?>
+                                                  <a href="<?php echo $this-> baseUrl(); ?>/threads/closed/id/<?php echo $this-> unFixedThread[$k]['id']; ?>/subcat/<?php echo $this-> subCat[0]['id']; ?>"  class="btn btn-info ">close</a>
+                                                <?php    
+                                              }
+                                          }
+                                          ?>
+                                            <a href="<?php echo $this-> baseUrl(); ?>/threads/edit/id/<?php echo $this-> unFixedThread[$k]['id']; ?>" target="_blank" class="btn btn-info ">Edit Thread</a>
+                                            <a href="<?php echo $this-> baseUrl(); ?>/threads/delete/id/<?php echo $this-> unFixedThread[$k]['id']; ?>" target="_blank" class="btn btn-info ">Delete Thread</a>
+                                          </div>
+                                          <?php
+                                            }
+                                          ?>
+                                          <div class="post_meta">
+                                            Posted: <i><?php echo $this-> unFixedThread[$k]['date'] ?></i> 
+                                            <span><?php echo $sum; ?> Comments</span>
+                                          </div>
                                 
+                                        </article>
+                                       <?php
+                                   }
+                                       ?>         
+
+                                    </section>
+                                </div>
                                 
                                 
                                 

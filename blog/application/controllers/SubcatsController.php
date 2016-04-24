@@ -6,12 +6,33 @@ class SubcatsController extends Zend_Controller_Action
     private $modelSubCat = null;
     private $modelThread = null;
     private $modelCategory = null;
+    private $modelStatus = null;
 
     public function init()
     {
        $this->modelSubCat = new Application_Model_DbTable_Subcats;
        $this->modelThread = new Application_Model_DbTable_Threads;
        $this->modelComments = new Application_Model_DbTable_Comments; 
+
+       $is_admin = 0;
+       $this->modelStatus = new Application_Model_DbTable_Site;
+        $auth = Zend_Auth::getInstance();
+            if($auth -> hasIdentity()){
+                $userObj = $auth->getIdentity();
+                if($userObj->type == 1)
+                {
+                    $is_admin =1;
+                }
+            }
+
+        $status = $this-> modelStatus->getStatusById(1);
+               if($status[0]['value'] == 1 or $is_admin == 1){
+               }
+               else
+               {
+                 $this->redirect('site/');
+               }
+
     }
 
     public function indexAction()
@@ -59,23 +80,28 @@ class SubcatsController extends Zend_Controller_Action
          }
 
 
+                $this->view-> is_admin = $is_admin;
+                $this->view-> is_loged = $is_loged;
+                $this->view-> user_id = $user_id;
+
 
         $id = $this->getRequest()->getParam('id');
         if($subcat = $this-> modelSubCat->getSubCatById($id) ){
-            
-         if($threads = $this -> modelThread -> listSelectedThreads($id))
-            {
-                 $comments= $this -> modelComments -> listAllComments();  
-                $this->view-> thread = $threads;
-                $this->view-> subCat = $subcat;
-                $this->view-> comments = $comments;
-                /*$this->view-> is_admin = $is_admin;
-                $this->view-> is_loged = $is_loged;
-                $this->view-> user_id = $user_id;*/
+            if(($subcat[0]['is_visible'] == '1') or ($is_admin == '1') ){
+                
+                    $fixedThreads = $this -> modelThread -> listFixedSelectedThreads($id);
+                    $unFixedThreads = $this -> modelThread -> listUnFixedSelectedThreads($id);
+                    $comments= $this -> modelComments -> listAllComments();  
+                    $this->view-> fixedThread = $fixedThreads;
+                    $this->view-> unFixedThread = $unFixedThreads;
+                    $this->view-> subCat = $subcat;
+                    $this->view-> comments = $comments;
             }
-            $this->view-> is_admin = $is_admin;
-                $this->view-> is_loged = $is_loged;
-                $this->view-> user_id = $user_id;
+            else
+            {
+                $this->redirect('/');   
+            }
+           
             /*else
             {
                 $this->redirect('/');

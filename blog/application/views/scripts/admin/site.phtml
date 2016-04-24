@@ -1,0 +1,23 @@
+<section class="container" >
+
+		<div class="page-header text-center">
+      		<h3  style="text-shadow:0px 0px 5px #555;">Site Status</h3>
+      	</div>
+        <div class="row">
+        	<?php echo $this -> form; ?>
+        </div>
+        <label class=" col-sm-12 control-label"><h1  > <small>All Site's Information:</small></h1></label>
+     <div class="row">
+        
+            <article class="col-sm-12">
+                <h3><span class="label label-default">Server Status </span>  : <?php if($this-> status[0]['value'] == 1)echo "Online"; else echo "Offline"; ?></h3>
+                <h3><span class="label label-default">Number Of Users </span>  : <?php echo count($this-> users); ?></h3>
+                <h3><span class="label label-default">Number Of Categories </span>  : <?php echo count($this-> cats); ?></h3>
+                <h3><span class="label label-default">Number Of Sub Categories</span>  : <?php echo count($this-> subCats); ?></h3>
+                <h3><span class="label label-default">Number Of Threads </span>  : <?php echo count($this-> threads); ?></h3>
+                <h3><span class="label label-default">Number Of Comments</span>  : <?php echo count($this-> comments); ?></h3>    
+
+              </article>
+     </div>
+
+</section>

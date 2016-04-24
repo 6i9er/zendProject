@@ -3,10 +3,30 @@
 {
 
     private $model = null;
+    private $modelStatus = null;
 
     public function init()
     {
        $this->model = new Application_Model_DbTable_Comments;
+
+       $is_admin = 0;
+       $this->modelStatus = new Application_Model_DbTable_Site;
+        $auth = Zend_Auth::getInstance();
+            if($auth -> hasIdentity()){
+                $userObj = $auth->getIdentity();
+                if($userObj->type == 1)
+                {
+                    $is_admin =1;
+                }
+            }
+
+        $status = $this-> modelStatus->getStatusById(1);
+               if($status[0]['value'] == 1 or $is_admin == 1){
+               }
+               else
+               {
+                 $this->redirect('site/');
+               }
     }
 
     public function indexAction()
@@ -36,8 +56,15 @@
                 $id = $this->getRequest()->getParam('id');
                 $thread_id = $this->getRequest()->getParam('thread_id');
                 if($comment = $this->model ->getCommentById($id)){
+                    if($comment[0]['u_id'] == $userObj-> id or $userObj-> type == 1 ){
+                        $form->populate($comment[0]);    
+                    }
+                    else
+                    {
+                        $this->redirect('/');
+                    }
                     // Found user
-                    $form->populate($comment[0]);
+                    
                 }
                 else
                 {
