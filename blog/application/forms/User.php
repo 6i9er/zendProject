@@ -89,10 +89,45 @@ class Application_Form_User extends Zend_Form
 
 	$submit = new Zend_Form_Element_Submit('submit');
 
+
 	$this->addElements(array($id,$name,$email, $password, $gender , $country , $prof_pic , $signature , $submit ));
  
+			// ---------- Adding Captcha -------------//
+   $this->addElement('captcha','captcha',
+    	array(
+    		'label'=>'Ensure that you are not a robot',
+    		'required'=>true,
+    		'captcha'=>array(
+    			'captcha'=>'Figlet',
+    			'wordLen'=>6,
+    			'timeout'=>200,
+    			),
+    		)
+    	);
+
+ 
+
 
     }
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }
