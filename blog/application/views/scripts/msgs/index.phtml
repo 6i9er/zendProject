@@ -1,0 +1,57 @@
+<section class="container" id="carousel_container">
+
+
+<div class="page-header text-center">
+  <h3 >All Users</h3>
+</div>
+
+<!-- Quiz Table -->
+
+<div class="row text-center ">
+  
+
+  <div class="row ">
+        <a href="<?php echo $this->baseUrl(); ?>/msgs/add" class="btn btn-info btn-block " > Insert New Message </a>
+    </div>
+    <div class="row mytable "  id="books_cat">
+      
+        <table class="table table-bordered  table-hover table-responsive ">
+            <thead>
+                <tr class="active ">
+                    <th width="5%">#</th>
+                    <th width="50%"> From</th>
+                    <th>Msg</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody >
+                <?php
+                    if($this->data){
+                         for($i=0; $i<count($this->data); $i++){
+                               ?>
+                                <tr>
+                                    <td><?php echo $this -> data[$i]['id'] ?></td>
+                                    <td><?php echo $this -> data[$i]['mailfrom'] ?></td>
+                                    <td><?php echo $this -> data[$i]['msgbody'] ; ?></td>
+                                    <td class=""> 
+                                        
+                                        <a href="<?php echo $this->baseUrl(); ?>/msgs/delete/id/<?php echo $this ->data[$i]['id'] ?>" target="_blank" class="btn btn-info btn-sm">Delete</a>
+                                    </td>
+                                </tr>
+                               <?php
+                           } 
+                    }
+                ?>    
+
+                
+                
+            </tbody>
+        </table>
+        
+    </div>
+        
+   
+</section>
+
+
+        
