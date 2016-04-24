@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 24, 2016 at 08:08 AM
+-- Generation Time: Apr 24, 2016 at 03:54 PM
 -- Server version: 5.5.49-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.16
 
@@ -73,6 +73,21 @@ INSERT INTO `comments` (`id`, `u_id`, `thread_id`, `comment`, `date`, `time`) VA
 (7, 1, 2, 'Fuck Test', '23 - 04 - 2016', '07:11:07am'),
 (8, 4, 5, 'askdml', '23 - 04 - 2016', '10:50:46pm'),
 (9, 1, 5, 'sss', '23 - 04 - 2016', '10:52:59pm');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `msgs`
+--
+
+CREATE TABLE IF NOT EXISTS `msgs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `mailfrom` varchar(200) NOT NULL,
+  `mailto` varchar(200) NOT NULL,
+  `msgbody` varchar(255) NOT NULL,
+  `date` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 

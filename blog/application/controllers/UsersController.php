@@ -156,6 +156,10 @@ class UsersController extends Zend_Controller_Action
                 $form -> removeElement('country');
                 $form -> removeElement('signature');
                 $form -> removeElement('name');
+                $form -> removeElement('captcha');
+
+
+                
 
                 if($this->getRequest()->isPost()){
                     if($form->isValid($data)){

@@ -90,7 +90,7 @@ class Application_Form_User extends Zend_Form
 	$submit = new Zend_Form_Element_Submit('submit');
 
 
-	$this->addElements(array($id,$name,$email, $password, $gender , $country , $prof_pic , $signature , $submit ));
+	$this->addElements(array($id,$name,$email, $password, $gender , $country , $prof_pic , $signature  ));
  
 			// ---------- Adding Captcha -------------//
    $this->addElement('captcha','captcha',
@@ -105,7 +105,7 @@ class Application_Form_User extends Zend_Form
     		)
     	);
 
- 
+ $this->addElements(array($submit ));
 
 
     }
